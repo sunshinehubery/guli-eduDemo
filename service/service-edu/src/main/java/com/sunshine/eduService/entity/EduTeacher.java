@@ -54,10 +54,10 @@ public class EduTeacher implements Serializable {
     @TableLogic
     private Boolean isDeleted;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "创建时间", example = "yyyy-MM-dd HH:mm:ss")
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "更新时间", example = "yyyy-MM-dd HH:mm:ss")
     private Date gmtModified;
 
 

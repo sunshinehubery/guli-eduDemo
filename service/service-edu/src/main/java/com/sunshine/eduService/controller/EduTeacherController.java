@@ -1,6 +1,7 @@
 package com.sunshine.eduService.controller;
 
 
+import com.sunshine.common.utils.R;
 import com.sunshine.eduService.entity.EduTeacher;
 import com.sunshine.eduService.service.EduTeacherService;
 import io.swagger.annotations.Api;
@@ -29,15 +30,17 @@ public class EduTeacherController {
 
     @ApiOperation(value = "所有讲师列表")
     @GetMapping("findAll")
-    public List<EduTeacher> list(){
-        return teacherService.list(null);
+    public R list(){
+        List<EduTeacher> list = teacherService.list(null);
+        return R.ok().data("item",list);
     }
 
     @ApiOperation(value = "删除讲师(逻辑删除)")
     @DeleteMapping("{id}")
-    public boolean removeById(@ApiParam(name = "id", value = "讲师ID", required = true)
+    public R removeById(@ApiParam(name = "id", value = "讲师ID", required = true)
                                   @PathVariable String id){
-        return teacherService.removeById(id);
+        teacherService.removeById(id);
+        return R.ok();
     }
 
 }
