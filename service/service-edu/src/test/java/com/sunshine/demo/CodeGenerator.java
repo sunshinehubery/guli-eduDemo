@@ -19,7 +19,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir("D:\\IdeaProjects\\guli-parent\\service\\service-edu" + "/src/main/java");
+        gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("sunshine");
         //生成后是否打开资源管理器
         gc.setOpen(false);
