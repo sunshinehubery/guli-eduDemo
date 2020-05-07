@@ -1,5 +1,7 @@
 package com.sunshine.eduService.config;
 
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -23,5 +25,13 @@ public class EduConfig {
         interceptor.setMaxTime(1000);//单位ms，超过不执行sql
         interceptor.setFormat(true);
         return interceptor;
+    }
+
+    /**
+     * 逻辑删除插件
+     */
+    @Bean
+    public ISqlInjector iSqlInjector(){
+        return new LogicSqlInjector();
     }
 }
