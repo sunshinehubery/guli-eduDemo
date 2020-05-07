@@ -39,8 +39,12 @@ public class EduTeacherController {
     @DeleteMapping("{id}")
     public R removeById(@ApiParam(name = "id", value = "讲师ID", required = true)
                                   @PathVariable String id){
-        teacherService.removeById(id);
-        return R.ok();
+        boolean flag = teacherService.removeById(id);
+        if(flag) {
+            return R.ok();
+        }else{
+            return R.error();
+        }
     }
 
 }
