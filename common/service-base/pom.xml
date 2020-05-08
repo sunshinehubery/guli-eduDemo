@@ -11,5 +11,12 @@
 
     <artifactId>service-base</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.sunshine</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
