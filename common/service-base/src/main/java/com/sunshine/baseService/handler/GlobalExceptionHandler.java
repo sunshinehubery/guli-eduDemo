@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public R error(Exception e){
-        return R.error().message("进行了统一异常处理");
+        return R.error().message(e.getMessage());
     }
 
     @ExceptionHandler(ArithmeticException.class)

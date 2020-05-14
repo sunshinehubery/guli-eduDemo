@@ -2,7 +2,6 @@ package com.sunshine.eduService.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sunshine.baseService.exception.GuliException;
 import com.sunshine.common.utils.R;
 import com.sunshine.eduService.entity.EduTeacher;
 import com.sunshine.eduService.query.TeacherQuery;
@@ -24,9 +23,9 @@ import java.util.List;
  * @since 2020-05-07
  */
 @Api(description = "讲师管理")
-@CrossOrigin
 @RestController
 @RequestMapping("/eduService/teacher")
+@CrossOrigin
 public class EduTeacherController {
     @Autowired
     private EduTeacherService teacherService;
@@ -34,11 +33,6 @@ public class EduTeacherController {
     @ApiOperation(value = "所有讲师列表")
     @GetMapping("findAll")
     public R list(){
-        try {
-            int i = 10/0;
-        }catch (Exception e){
-            throw new GuliException(2101,"自定义异常");
-        }
         List<EduTeacher> list = teacherService.list(null);
         return R.ok().data("item",list);
     }
@@ -58,7 +52,7 @@ public class EduTeacherController {
                       @ApiParam(name = "limit", value = "每页记录数", required = true)
                       @PathVariable Long limit,
                       @ApiParam(name = "teacherQuery", value = "查询对象", required = false)
-                      @PathVariable TeacherQuery teacherQuery){
+                      TeacherQuery teacherQuery){
         Page<EduTeacher> teacherPage = new Page<>(page,limit);
         teacherService.pageQuery(teacherPage,teacherQuery);
         List<EduTeacher> teachers = teacherPage.getRecords();
