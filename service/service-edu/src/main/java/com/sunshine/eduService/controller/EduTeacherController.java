@@ -41,8 +41,12 @@ public class EduTeacherController {
     @DeleteMapping("{id}")
     public R removeById(@ApiParam(name = "id", value = "讲师ID", required = true)
                                   @PathVariable String id){
-        teacherService.removeById(id);
-        return R.ok();
+        boolean result = teacherService.removeByTeacherId(id);
+        if(result) {
+            return R.ok();
+        }else {
+            return R.error().message("删除失败");
+        }
     }
 
     @ApiOperation(value = "分页讲师列表")
@@ -57,7 +61,7 @@ public class EduTeacherController {
         teacherService.pageQuery(teacherPage,teacherQuery);
         List<EduTeacher> teachers = teacherPage.getRecords();
         Long total = teacherPage.getTotal();
-        return R.ok().data("total", total).data("rows", teachers);
+        return R.ok().data("total", total).data("items", teachers);
     }
 
     @ApiOperation(value = "新增讲师")
@@ -77,12 +81,9 @@ public class EduTeacherController {
     }
 
     @ApiOperation(value = "根据讲师ID修改信息")
-    @PutMapping("{id}")
-    public R UpdateById(@ApiParam(name = "id", value = "讲师ID", required = true)
-                        @PathVariable String id,
-                        @ApiParam(name = "teacher", value = "讲师对象", required = true)
+    @PutMapping("/edit")
+    public R UpdateById(@ApiParam(name = "teacher", value = "讲师对象", required = true)
                         @RequestBody EduTeacher teacher){
-        teacher.setId(id);
         teacherService.updateById(teacher);
         return R.ok();
     }

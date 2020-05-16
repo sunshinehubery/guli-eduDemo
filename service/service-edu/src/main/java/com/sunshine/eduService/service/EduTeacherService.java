@@ -15,4 +15,5 @@ import com.sunshine.eduService.query.TeacherQuery;
  */
 public interface EduTeacherService extends IService<EduTeacher> {
     void pageQuery(Page<EduTeacher> teacherPage, TeacherQuery query);
+    boolean removeByTeacherId(String id);
 }
