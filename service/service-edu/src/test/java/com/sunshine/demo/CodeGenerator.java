@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.sunshine.common.utils.PropertiesUtil;
 import org.junit.Test;
 
 public class CodeGenerator {
@@ -64,5 +65,11 @@ public class CodeGenerator {
 
         // 6、执行
         mpg.execute();
+    }
+
+    @Test
+    public void testGetProperties(){
+        String property = PropertiesUtil.getProperty("sunshineTest");
+        System.out.println(property);
     }
 }
