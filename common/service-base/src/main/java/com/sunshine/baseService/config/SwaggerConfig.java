@@ -31,8 +31,8 @@ public class SwaggerConfig {
 
     private ApiInfo webApiInfo(){
         return new ApiInfoBuilder()
-                .title("网站-讲师模块API文档")
-                .description("本文档描述了讲师模块微服务接口定义")
+                .title("sunshine-在线教育DemoAPI文档")
+                .description("本文档描述了在线教育项目各个微服务接口定义")
                 .version("1.0")
                 .contact(new Contact("sunshine", "https://github.com/sunshinehubery", "1036317945@qq.com"))
                 .build();
