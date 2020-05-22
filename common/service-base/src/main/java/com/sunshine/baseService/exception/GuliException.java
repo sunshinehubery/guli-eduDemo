@@ -1,5 +1,6 @@
 package com.sunshine.baseService.exception;
 
+import com.sunshine.common.utils.ResultCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,17 @@ public class GuliException extends RuntimeException {
     private Integer code;
     @ApiModelProperty(value = "异常信息")
     private String msg;
+
+    public GuliException(int code, String msg){
+        super(msg);
+        this.code = code;
+        this.msg = msg;
+    }
+    public GuliException(ResultCode code){
+        super(code.getMsg());
+        this.code = code.getCode();
+        this.msg = code.getMsg();
+    }
     @Override
     public String toString() {
         return "GuliException{" +

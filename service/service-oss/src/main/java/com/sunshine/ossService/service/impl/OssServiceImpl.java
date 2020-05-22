@@ -3,8 +3,10 @@ package com.sunshine.ossService.service.impl;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.sunshine.baseService.exception.GuliException;
+import com.sunshine.common.utils.ResultCode;
 import com.sunshine.ossService.service.OssService;
 import com.sunshine.ossService.utils.ConstantPropertiesUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +22,7 @@ import java.util.UUID;
  * @Version: 1.0
  **/
 @Service
+@Slf4j
 public class OssServiceImpl implements OssService {
     @Override
     public String upload(MultipartFile file) {
@@ -56,7 +59,8 @@ public class OssServiceImpl implements OssService {
             //获取url地址
             uploadUrl = "http://" + bucketName + "." + endpoint + "/" + fileUrl;
         }catch (IOException e){
-            throw new GuliException(21004,"文件上传错误");
+            log.error("###OssService.upload"+ e.getMessage());
+            throw new GuliException(ResultCode.ERROR_UPLOAD_FILE);
         }
         return uploadUrl;
     }

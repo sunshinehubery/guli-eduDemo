@@ -2,6 +2,7 @@ package com.sunshine.common.utils;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,48 +14,41 @@ import java.util.Map;
  * @Version: 1.0
  **/
 @Data
-public class R {
-    @ApiModelProperty(value = "是否成功")
-    private Boolean success;
+public class R<T> {
     @ApiModelProperty(value = "返回码")
     private Integer code;
     @ApiModelProperty(value = "返回消息")
     private String message;
     @ApiModelProperty(value = "返回数据")
-    private Map<String, Object> data = new HashMap<String, Object>();
-    private R(){}
-    public static R ok(){
-        R r = new R();
-        r.setSuccess(true);
-        r.setCode(ResultCode.SUCCESS);
-        r.setMessage("成功");
-        return r;
+    private T data;
+
+    private R(ResultCode resultCode, T data){
+        this.code = resultCode.getCode();
+        this.message = resultCode.getMsg();
+        this.data = data;
     }
-    public static R error(){
-        R r = new R();
-        r.setSuccess(false);
-        r.setCode(ResultCode.ERROR);
-        r.setMessage("失败");
-        return r;
+    private R(int code, String msg, T data){
+        this.code = code;
+        this.message = msg;
+        this.data = data;
     }
-    public R success(Boolean success){
-        this.setSuccess(success);
-        return this;
+    private R(ResultCode resultCode){
+        this(resultCode,null);
     }
-    public R message(String message){
-        this.setMessage(message);
-        return this;
+    private R(int code, String msg){
+        this.code = code;
+        this.message = msg;
     }
-    public R code(Integer code){
-        this.setCode(code);
-        return this;
+    public static <T> R<T> ok(T data){
+        return new R<T>(ResultCode.SUCCESS,data);
     }
-    public R data(String key, Object value){
-        this.data.put(key, value);
-        return this;
+    public static <T> R<T> ok(int code, String msg, T data){
+        return new R<T>(code, msg, data);
     }
-    public R data(Map<String, Object> map){
-        this.setData(map);
-        return this;
+    public static R error(ResultCode code){
+        return new R(code);
+    }
+    public static R error(String msg){
+        return new R(ResultCode.ERROR.getCode(),msg);
     }
 }

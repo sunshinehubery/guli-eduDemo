@@ -1,6 +1,7 @@
 package com.sunshine.ossService.controller;
 
 import com.sunshine.common.utils.R;
+import com.sunshine.common.utils.ResultCode;
 import com.sunshine.ossService.service.OssService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +35,7 @@ public class OssController {
                     @RequestParam("file") MultipartFile file) {
         String uploadUrl = ossService.upload(file);
         //返回r对象
-        return R.ok().message("文件上传成功").data("url", uploadUrl);
+        return R.ok(ResultCode.SUCCESS.getCode(),"文件上传成功", uploadUrl);
 
     }
 }
