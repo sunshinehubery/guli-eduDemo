@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @description:
- * @author: sunshinehubery
+ * @author: sunshine
  * @date: 2020/5/17 21:03
  * @Version: 1.0
  **/
@@ -21,8 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 @RequestMapping("/oss/file")
 public class OssController {
+    private final OssService ossService;
+
     @Autowired
-    private OssService ossService;
+    public OssController(OssService ossService){
+        this.ossService = ossService;
+    }
 
     /**
      * 文件上传

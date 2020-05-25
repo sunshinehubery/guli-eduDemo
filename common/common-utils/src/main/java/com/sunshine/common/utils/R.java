@@ -39,11 +39,12 @@ public class R<T> {
         this.code = code;
         this.message = msg;
     }
+    public static R ok(){return new R(ResultCode.SUCCESS);}
     public static <T> R<T> ok(T data){
-        return new R<T>(ResultCode.SUCCESS,data);
+        return new R<>(ResultCode.SUCCESS,data);
     }
     public static <T> R<T> ok(int code, String msg, T data){
-        return new R<T>(code, msg, data);
+        return new R<>(code, msg, data);
     }
     public static R error(ResultCode code){
         return new R(code);

@@ -27,14 +27,19 @@ import java.util.List;
 @RequestMapping("/eduService/teacher")
 @CrossOrigin
 public class EduTeacherController {
+    private final EduTeacherService teacherService;
+
+    //java变量初始化：静态变量或静态语句块 =》实例变量或初始化语句块 =》构造方法 =》@Autowired
     @Autowired
-    private EduTeacherService teacherService;
+    public EduTeacherController(EduTeacherService eduTeacherService){
+        this.teacherService = eduTeacherService;
+    }
 
     @ApiOperation(value = "所有讲师列表")
     @GetMapping("findAll")
     public R list(){
         List<EduTeacher> list = teacherService.list(null);
-        return R.ok().data("item",list);
+        return R.ok(list);
     }
 
     @ApiOperation(value = "删除讲师(逻辑删除)")
@@ -45,7 +50,7 @@ public class EduTeacherController {
         if(result) {
             return R.ok();
         }else {
-            return R.error().message("删除失败");
+            return R.error("删除失败");
         }
     }
 
@@ -55,13 +60,11 @@ public class EduTeacherController {
                       @PathVariable Long page,
                       @ApiParam(name = "limit", value = "每页记录数", required = true)
                       @PathVariable Long limit,
-                      @ApiParam(name = "teacherQuery", value = "查询对象", required = false)
+                      @ApiParam(name = "teacherQuery", value = "查询对象")
                       TeacherQuery teacherQuery){
         Page<EduTeacher> teacherPage = new Page<>(page,limit);
         teacherService.pageQuery(teacherPage,teacherQuery);
-        List<EduTeacher> teachers = teacherPage.getRecords();
-        Long total = teacherPage.getTotal();
-        return R.ok().data("total", total).data("items", teachers);
+        return R.ok(teacherPage);
     }
 
     @ApiOperation(value = "新增讲师")
@@ -77,7 +80,7 @@ public class EduTeacherController {
     public R getById(@ApiParam(name = "id", value = "讲师ID", required = true)
                      @PathVariable String id){
         EduTeacher teacher = teacherService.getById(id);
-        return R.ok().data("item", teacher);
+        return R.ok(teacher);
     }
 
     @ApiOperation(value = "根据讲师ID修改信息")
