@@ -3,14 +3,12 @@ package com.sunshine.eduService.controller;
 
 import com.sunshine.common.utils.R;
 import com.sunshine.eduService.service.EduSubjectService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -21,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author sunshine
  * @since 2020-05-26
  */
+@Api(description = "课程管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/eduService/subject")
 public class EduSubjectController {

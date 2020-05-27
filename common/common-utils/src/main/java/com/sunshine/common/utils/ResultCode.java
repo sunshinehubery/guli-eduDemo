@@ -9,7 +9,8 @@ package com.sunshine.common.utils;
 public enum ResultCode {
     SUCCESS(20000,"操作成功"),
     ERROR(20001,"网络繁忙"),
-    ERROR_UPLOAD_FILE(21001,"文件上传失败");
+    ERROR_UPLOAD_FILE(21001,"文件上传失败"),
+    ERROR_INPUT_FILE(21002,"导入文件异常");
 
     private int code;
     private String msg;
