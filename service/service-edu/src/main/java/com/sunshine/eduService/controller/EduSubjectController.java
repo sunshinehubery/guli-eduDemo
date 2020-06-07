@@ -2,6 +2,7 @@ package com.sunshine.eduService.controller;
 
 
 import com.sunshine.common.utils.R;
+import com.sunshine.common.utils.ResultCode;
 import com.sunshine.eduService.service.EduSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -36,8 +39,12 @@ public class EduSubjectController {
     @PostMapping("importSubject")
     public R importSubject(@ApiParam(name = "file", value = "excel表格", required = true)
                            @RequestParam("file")MultipartFile file){
-        subjectService.importSubject(file);
-        return R.ok();
+        final List<String> msg = subjectService.importSubject(file);
+        if(msg.size() == 0){
+            return R.ok(ResultCode.SUCCESS_UPLOAD_FILE);
+        } else {
+            return R.error(ResultCode.ERROR_UPLOAD_PART_DATA, msg);
+        }
     }
 }
 

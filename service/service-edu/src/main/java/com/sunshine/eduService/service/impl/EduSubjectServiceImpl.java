@@ -49,7 +49,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
                 Row row = sheet.getRow(i);
                 //判断该行是否有数据
                 if(row == null){
-                    String errorMsg = i + "行表格数据为空，请输入数据";
+                    String errorMsg = i+1 + "行表格数据为空，请输入数据";
                     msg.add(errorMsg);
                     continue;
                 }
@@ -57,7 +57,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
                 Cell cellOne = row.getCell(0);
                 //判断列数据是否为空
                 if(cellOne == null){
-                    String errorMsg = "第" + i + "行数据为空";
+                    String errorMsg = "第" + i+1 + "行数据为空";
                     msg.add(errorMsg);
                     continue;
                 }
@@ -81,7 +81,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
                 Cell cellTwo = row.getCell(1);
                 //判断列数据是否为空
                 if(cellTwo == null){
-                    String errorMsg = "第" + i + "行数据为空";
+                    String errorMsg = "第" + i+1 + "行数据为空";
                     msg.add(errorMsg);
                     continue;
                 }

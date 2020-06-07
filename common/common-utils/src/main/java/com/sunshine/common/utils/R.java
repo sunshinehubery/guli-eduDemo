@@ -52,4 +52,7 @@ public class R<T> {
     public static R error(String msg){
         return new R(ResultCode.ERROR.getCode(),msg);
     }
+    public static <T> R<T> error(ResultCode code, T data){
+        return new R<>(code, data);
+    }
 }

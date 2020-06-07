@@ -10,7 +10,9 @@ public enum ResultCode {
     SUCCESS(20000,"操作成功"),
     ERROR(20001,"网络繁忙"),
     ERROR_UPLOAD_FILE(21001,"文件上传失败"),
-    ERROR_INPUT_FILE(21002,"导入文件异常");
+    ERROR_INPUT_FILE(21002,"导入文件异常"),
+    SUCCESS_UPLOAD_FILE(21000,"导入课程成功"),
+    ERROR_UPLOAD_PART_DATA(21003,"部分数据添加失败");
 
     private int code;
     private String msg;
