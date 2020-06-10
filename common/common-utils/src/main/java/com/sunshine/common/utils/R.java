@@ -40,6 +40,7 @@ public class R<T> {
         this.message = msg;
     }
     public static R ok(){return new R(ResultCode.SUCCESS);}
+    public static R ok(ResultCode code){return new R(code);}
     public static <T> R<T> ok(T data){
         return new R<>(ResultCode.SUCCESS,data);
     }

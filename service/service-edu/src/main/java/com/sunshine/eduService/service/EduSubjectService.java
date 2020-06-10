@@ -2,6 +2,7 @@ package com.sunshine.eduService.service;
 
 import com.sunshine.eduService.entity.EduSubject;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sunshine.eduService.entity.SubjectNestedVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -17,4 +18,6 @@ import java.util.List;
 public interface EduSubjectService extends IService<EduSubject> {
 
     List<String> importSubject(MultipartFile file);
+
+    List<SubjectNestedVo> nestedList();
 }

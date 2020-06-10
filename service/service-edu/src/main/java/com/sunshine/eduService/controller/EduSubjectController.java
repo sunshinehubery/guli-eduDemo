@@ -3,6 +3,7 @@ package com.sunshine.eduService.controller;
 
 import com.sunshine.common.utils.R;
 import com.sunshine.common.utils.ResultCode;
+import com.sunshine.eduService.entity.SubjectNestedVo;
 import com.sunshine.eduService.service.EduSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +46,21 @@ public class EduSubjectController {
         } else {
             return R.error(ResultCode.ERROR_UPLOAD_PART_DATA, msg);
         }
+    }
+
+    @ApiOperation(value = "嵌套数据列表")
+    @GetMapping("list")
+    public R nestedList(){
+        List<SubjectNestedVo> voList = subjectService.nestedList();
+        return R.ok(voList);
+    }
+
+    @ApiOperation(value = "根据主键id删除课程")
+    @DeleteMapping("{id}")
+    public R removeById(@ApiParam(name = "id", value = "课程id", required = true)
+                        @PathVariable String id){
+        subjectService.removeById(id);
+        return R.ok();
     }
 }
 

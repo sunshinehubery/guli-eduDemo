@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunshine.baseService.exception.GuliException;
 import com.sunshine.common.utils.ResultCode;
 import com.sunshine.eduService.entity.EduSubject;
+import com.sunshine.eduService.entity.SubjectNestedVo;
+import com.sunshine.eduService.entity.SubjectVo;
 import com.sunshine.eduService.mapper.EduSubjectMapper;
 import com.sunshine.eduService.service.EduSubjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,6 +14,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -100,6 +103,41 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             e.printStackTrace();
             throw new GuliException(ResultCode.ERROR_INPUT_FILE);
         }
+    }
+
+    @Override
+    public List<SubjectNestedVo> nestedList() {
+        List<SubjectNestedVo> voList = new ArrayList<>();
+        //获取一级分类的数据
+        QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
+        wrapper.eq("parent_id",0);
+        wrapper.orderByAsc("sort","id");
+        List<EduSubject> subjectList = baseMapper.selectList(wrapper);
+
+        //获取二级分类的数据(直接获取所有的二级数据，减轻数据库服务器的压力)
+        QueryWrapper<EduSubject> wrapper2 = new QueryWrapper<>();
+        wrapper2.ne("parent_id",0);
+        wrapper2.orderByAsc("sort","id");
+        List<EduSubject> subjectList2 = baseMapper.selectList(wrapper2);
+
+        //填充一级的vo数据
+        for(EduSubject subject : subjectList){
+            //创建一级类别vo对象
+            SubjectNestedVo subjectNestedVo = new SubjectNestedVo();
+            BeanUtils.copyProperties(subject, subjectNestedVo);
+            List<SubjectVo> vos = new ArrayList<>();
+            for (EduSubject subject2 : subjectList2){
+                if(subject.getId().equals(subject2.getParentId())){
+                    //创建二级类别vo对象
+                    SubjectVo subjectVo = new SubjectVo();
+                    BeanUtils.copyProperties(subject2, subjectVo);
+                    vos.add(subjectVo);
+                }
+            }
+            subjectNestedVo.setSubjectVoList(vos);
+            voList.add(subjectNestedVo);
+        }
+        return voList;
     }
 
     //判断是否存在该一级分类的数据
