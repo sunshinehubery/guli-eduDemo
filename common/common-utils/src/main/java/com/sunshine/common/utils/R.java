@@ -49,6 +49,9 @@ public class R<T> {
     public static R error(String msg){
         return new R(ResultCode.ERROR.getCode(),msg);
     }
+    public static R error(int code,String msg){
+        return new R(code,msg);
+    }
     public static <T> R<T> error(ResultCode code, T data){
         return new R<>(code, data);
     }

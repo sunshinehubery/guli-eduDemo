@@ -164,6 +164,16 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         }
     }
 
+    @Override
+    public void saveLevelTwo(EduSubject eduSubject) {
+        EduSubject existTwoSubject = this.existTwoSubject(eduSubject.getTitle(), eduSubject.getParentId());
+        if(existTwoSubject == null){
+            super.save(eduSubject);
+        }else {
+            throw new GuliException(ResultCode.EXIST_ALREADY_DATA);
+        }
+    }
+
     //判断是否存在该一级分类的数据
     private EduSubject existOneSubject(String cellOneValue){
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
@@ -172,7 +182,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         return baseMapper.selectOne(wrapper);
     }
 
-    //判断是否存在该一级分类的数据
+    //判断是否存在该二级分类的数据
     private EduSubject existTwoSubject(String cellTwoValue,String parentId){
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
         wrapper.eq("title", cellTwoValue);

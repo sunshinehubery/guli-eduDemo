@@ -22,4 +22,6 @@ public interface EduSubjectService extends IService<EduSubject> {
     List<SubjectNestedVo> nestedList();
 
     void saveLevelOne(EduSubject eduSubject);
+
+    void saveLevelTwo(EduSubject eduSubject);
 }

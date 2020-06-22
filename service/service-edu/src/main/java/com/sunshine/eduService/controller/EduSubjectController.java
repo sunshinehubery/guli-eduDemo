@@ -1,6 +1,7 @@
 package com.sunshine.eduService.controller;
 
 
+import com.sunshine.baseService.exception.GuliException;
 import com.sunshine.common.utils.R;
 import com.sunshine.common.utils.ResultCode;
 import com.sunshine.eduService.entity.EduSubject;
@@ -71,11 +72,25 @@ public class EduSubjectController {
     public R saveLevelOne(@ApiParam(name = "eduSubject", value = "课程分类对象", required = true)
                           @RequestBody EduSubject eduSubject){
         try {
+            eduSubject.setParentId("0");
             subjectService.saveLevelOne(eduSubject);
             return R.ok();
-        }catch (Exception e){
+        }catch (GuliException e){
             log.error("###EduSubjectController saveLevelOne: errors:{}, errorMsg:{}",e,e.getMessage());
-            return R.error(e.getMessage());
+            return R.error(e.getCode(),e.getMsg());
+        }
+    }
+
+    @ApiOperation(value = "新增课程二级分类")
+    @PostMapping("save-level-two")
+    public R saveLevelTwo(@ApiParam(name = "eduSubject", value = "课程分类对象", required = true)
+                          @RequestBody EduSubject eduSubject){
+        try {
+            subjectService.saveLevelTwo(eduSubject);
+            return R.ok();
+        }catch (GuliException e){
+            log.error("###EduSubjectController saveLevelTwo: errors:{}, errorMsg:{}",e,e.getMessage());
+            return R.error(e.getCode(),e.getMsg());
         }
     }
 }
