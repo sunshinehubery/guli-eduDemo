@@ -34,6 +34,11 @@ import java.util.List;
 @Service
 public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubject> implements EduSubjectService {
 
+    /**
+     * 通过excel批量导入课程
+     * @param file
+     * @return
+     */
     @Override
     public List<String> importSubject(MultipartFile file) {
         try {
@@ -105,6 +110,10 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         }
     }
 
+    /**
+     * 嵌套课程数据列表（一级分类和该课程下的二级分类）
+     * @return
+     */
     @Override
     public List<SubjectNestedVo> nestedList() {
         List<SubjectNestedVo> voList = new ArrayList<>();
@@ -138,6 +147,21 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             voList.add(subjectNestedVo);
         }
         return voList;
+    }
+
+    /**
+     * 保存课程一级分类
+     * @param eduSubject
+     * @return
+     */
+    @Override
+    public void saveLevelOne(EduSubject eduSubject) {
+        EduSubject existOneSubject = this.existOneSubject(eduSubject.getTitle());
+        if(existOneSubject == null){
+            super.save(eduSubject);
+        }else {
+            throw new GuliException(ResultCode.EXIST_ALREADY_DATA);
+        }
     }
 
     //判断是否存在该一级分类的数据

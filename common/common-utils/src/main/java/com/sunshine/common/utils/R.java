@@ -2,10 +2,6 @@ package com.sunshine.common.utils;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @description: 返回的结果类

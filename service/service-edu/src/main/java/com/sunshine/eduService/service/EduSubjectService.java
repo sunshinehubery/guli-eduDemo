@@ -20,4 +20,6 @@ public interface EduSubjectService extends IService<EduSubject> {
     List<String> importSubject(MultipartFile file);
 
     List<SubjectNestedVo> nestedList();
+
+    void saveLevelOne(EduSubject eduSubject);
 }

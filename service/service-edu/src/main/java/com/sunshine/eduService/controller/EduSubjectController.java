@@ -3,11 +3,13 @@ package com.sunshine.eduService.controller;
 
 import com.sunshine.common.utils.R;
 import com.sunshine.common.utils.ResultCode;
+import com.sunshine.eduService.entity.EduSubject;
 import com.sunshine.eduService.entity.SubjectNestedVo;
 import com.sunshine.eduService.service.EduSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/eduService/subject")
+@Slf4j
 public class EduSubjectController {
 
     private final EduSubjectService subjectService;
@@ -61,6 +64,19 @@ public class EduSubjectController {
                         @PathVariable String id){
         subjectService.removeById(id);
         return R.ok();
+    }
+
+    @ApiOperation(value = "新增课程一级分类")
+    @PostMapping("save-level-one")
+    public R saveLevelOne(@ApiParam(name = "eduSubject", value = "课程分类对象", required = true)
+                          @RequestBody EduSubject eduSubject){
+        try {
+            subjectService.saveLevelOne(eduSubject);
+            return R.ok();
+        }catch (Exception e){
+            log.error("###EduSubjectController saveLevelOne: errors:{}, errorMsg:{}",e,e.getMessage());
+            return R.error(e.getMessage());
+        }
     }
 }
 

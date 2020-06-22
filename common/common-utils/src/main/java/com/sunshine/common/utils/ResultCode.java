@@ -9,6 +9,8 @@ package com.sunshine.common.utils;
 public enum ResultCode {
     SUCCESS(20000,"操作成功"),
     ERROR(20001,"网络繁忙"),
+    SAVE_DATA_ERROR(20002,"保存数据失败"),
+    EXIST_ALREADY_DATA(20003,"数据已经存在"),
     ERROR_UPLOAD_FILE(21001,"文件上传失败"),
     ERROR_INPUT_FILE(21002,"导入文件异常"),
     SUCCESS_UPLOAD_FILE(21000,"导入课程成功"),
