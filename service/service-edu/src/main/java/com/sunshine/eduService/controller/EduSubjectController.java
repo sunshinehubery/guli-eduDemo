@@ -26,7 +26,7 @@ import java.util.List;
  * @author sunshine
  * @since 2020-05-26
  */
-@Api(description = "课程管理")
+@Api(description = "课程科目类别管理")
 @CrossOrigin
 @RestController
 @RequestMapping("/eduService/subject")

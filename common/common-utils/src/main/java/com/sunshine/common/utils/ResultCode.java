@@ -11,6 +11,8 @@ public enum ResultCode {
     ERROR(20001,"网络繁忙"),
     SAVE_DATA_ERROR(20002,"保存数据失败"),
     EXIST_ALREADY_DATA(20003,"数据已经存在"),
+    SAVE_COURSE_ERROR(20004, "课程信息保存失败"),
+    SAVE_COURSE_DESCRIPTION_ERROR(20005, "课程详情信息保存失败"),
     ERROR_UPLOAD_FILE(21001,"文件上传失败"),
     ERROR_INPUT_FILE(21002,"导入文件异常"),
     SUCCESS_UPLOAD_FILE(21000,"导入课程成功"),
