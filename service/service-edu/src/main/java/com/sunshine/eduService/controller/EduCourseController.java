@@ -30,8 +30,16 @@ public class EduCourseController {
     @PostMapping("save-course-info")
     public R saveCourseInfo(@ApiParam(name = "EduCourseDto", value = "课程基本信息", required = true)
                                 @RequestBody EduCourseDto eduCourseDto){
-        eduCourseService.saveCourseInfo(eduCourseDto);
-        return R.ok();
+        String courseId = eduCourseService.saveCourseInfo(eduCourseDto);
+        return R.ok(courseId);
+    }
+
+    @ApiOperation(value = "根据ID查询课程")
+    @GetMapping("courseInfo/{id}")
+    public R getCourseInfoById(@ApiParam(name="id", value = "课程id", required = true)
+                               @PathVariable String id){
+        EduCourseDto eduCourseDto = eduCourseService.getCourseInfoById(id);
+        return R.ok(eduCourseDto);
     }
 }
 

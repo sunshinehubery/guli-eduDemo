@@ -14,5 +14,7 @@ import com.sunshine.eduService.entity.EduCourseDto;
  */
 public interface EduCourseService extends IService<EduCourse> {
 
-    void saveCourseInfo(EduCourseDto eduCourseDto);
+    String saveCourseInfo(EduCourseDto eduCourseDto);
+
+    EduCourseDto getCourseInfoById(String id);
 }
