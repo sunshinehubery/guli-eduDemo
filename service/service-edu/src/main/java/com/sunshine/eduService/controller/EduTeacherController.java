@@ -10,9 +10,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -27,6 +30,16 @@ import java.util.List;
 @RequestMapping("/eduService/teacher")
 @CrossOrigin
 public class EduTeacherController {
+    @Autowired
+    private RedisTemplate<String, Object> template;
+
+    @GetMapping("/test")
+    public R test(){
+        ValueOperations<String, Object> ops = template.opsForValue();
+        ops.set("strKey1", "hello spring boot redis",30, TimeUnit.SECONDS);
+        String value = (String) ops.get("strKey1");
+        return R.ok(value);
+    }
     private final EduTeacherService teacherService;
 
     //java变量初始化：静态变量或静态语句块 =》实例变量或初始化语句块 =》构造方法 =》@Autowired
