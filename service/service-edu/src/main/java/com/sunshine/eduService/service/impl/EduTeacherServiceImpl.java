@@ -7,7 +7,6 @@ import com.sunshine.eduService.mapper.EduTeacherMapper;
 import com.sunshine.eduService.query.TeacherQuery;
 import com.sunshine.eduService.service.EduTeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 

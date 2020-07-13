@@ -1,14 +1,19 @@
 package com.sunshine.eduService.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunshine.common.utils.R;
+import com.sunshine.eduService.entity.EduCourse;
 import com.sunshine.eduService.entity.EduCourseDto;
+import com.sunshine.eduService.query.CourseQuery;
 import com.sunshine.eduService.service.EduCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -40,6 +45,20 @@ public class EduCourseController {
                                @PathVariable String id){
         EduCourseDto eduCourseDto = eduCourseService.getCourseInfoById(id);
         return R.ok(eduCourseDto);
+    }
+
+    @ApiOperation(value = "分页课程列表")
+    @GetMapping("{page}/{limit}")
+    public R pageList(@ApiParam(name = "page", value = "当前页", required = true)
+                      @PathVariable Long page,
+                      @ApiParam(name = "limit", value = "每页记录数", required = true)
+                      @PathVariable Long limit,
+                      @ApiParam(name = "courseQuery", value = "查询对象")
+                      CourseQuery courseQuery){
+        Page<EduCourse> coursePage = new Page<>(page, limit);
+        eduCourseService.pageQuery(coursePage, courseQuery);
+        List<EduCourse> eduCourseList = coursePage.getRecords();
+        return R.ok(eduCourseList);
     }
 }
 

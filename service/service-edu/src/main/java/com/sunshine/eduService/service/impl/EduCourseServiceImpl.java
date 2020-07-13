@@ -1,6 +1,7 @@
 package com.sunshine.eduService.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunshine.baseService.exception.GuliException;
 import com.sunshine.common.utils.ResultCode;
 import com.sunshine.eduService.constants.CourseConstants;
@@ -9,6 +10,7 @@ import com.sunshine.eduService.entity.EduCourse;
 import com.sunshine.eduService.entity.EduCourseDescription;
 import com.sunshine.eduService.entity.EduCourseDto;
 import com.sunshine.eduService.mapper.EduCourseMapper;
+import com.sunshine.eduService.query.CourseQuery;
 import com.sunshine.eduService.service.EduCourseDescriptionService;
 import com.sunshine.eduService.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -88,5 +90,28 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         EduCourseDescription description = eduCourseDescriptionService.getOne(wrapper);
         eduCourseDto.setDescription(description.getDescription());
         return eduCourseDto;
+    }
+
+    @Override
+    public void pageQuery(Page<EduCourse> coursePage, CourseQuery query) {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("gmt_create");
+        if(query == null){
+            baseMapper.selectPage(coursePage, wrapper);
+            return;
+        }
+        if (!StringUtils.isEmpty(query.getTitle())){
+            wrapper.like("title", query.getTitle());
+        }
+        if(!StringUtils.isEmpty(query.getTeacherId())){
+            wrapper.eq("teacher_id", query.getTeacherId());
+        }
+        if(!StringUtils.isEmpty(query.getSubjectParentId())){
+            wrapper.eq("subject_parent_id", query.getSubjectParentId());
+        }
+        if(!StringUtils.isEmpty(query.getSubjectId())){
+            wrapper.eq("subject_id", query.getSubjectId());
+        }
+        baseMapper.selectPage(coursePage, wrapper);
     }
 }
