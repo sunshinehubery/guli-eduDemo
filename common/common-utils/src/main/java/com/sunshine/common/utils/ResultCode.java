@@ -16,10 +16,14 @@ public enum ResultCode {
     ERROR_DATA_NULL(20006, "数据不存在"),
     UPDATE_COURSE_ERROR(20007, "课程信息更新失败"),
     UPDATE_COURSE_DESCRIPTION_ERROR(20008, "课程详情信息更新失败"),
+    CHAPTER_EXIST_VIDEO(20009, "该章节下存在视频教程，请先删除视频教程"),
+    SAVE_VIDEO_ERROR(20010, "课时信息保存失败"),
+    UPDATE_VIDEO_ERROR(20011,"课时信息更新失败"),
     ERROR_UPLOAD_FILE(21001,"文件上传失败"),
     ERROR_INPUT_FILE(21002,"导入文件异常"),
     SUCCESS_UPLOAD_FILE(21000,"导入课程成功"),
     ERROR_UPLOAD_PART_DATA(21003,"部分数据添加失败");
+
 
     private int code;
     private String msg;

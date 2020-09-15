@@ -57,8 +57,14 @@ public class EduCourseController {
                       CourseQuery courseQuery){
         Page<EduCourse> coursePage = new Page<>(page, limit);
         eduCourseService.pageQuery(coursePage, courseQuery);
-        List<EduCourse> eduCourseList = coursePage.getRecords();
-        return R.ok(eduCourseList);
+        return R.ok(coursePage);
+    }
+
+    @ApiOperation(value = "根据ID删除课程")
+    @RequestMapping("{id}")
+    public R removeById(@ApiParam(name = "id",value = "课程id", required = true) @PathVariable String id){
+        // todo 首先删除video记录，然后删除chapter记录，最后删除Course记录
+        return R.ok();
     }
 }
 
