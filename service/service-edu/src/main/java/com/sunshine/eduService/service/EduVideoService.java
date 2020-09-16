@@ -22,4 +22,6 @@ public interface EduVideoService extends IService<EduVideo> {
     void updateVideoInfoById(VideoInfoForm videoInfoForm);
 
     boolean removeVideoById(String id);
+
+    boolean removeVideoByCourseId(String courseId);
 }

@@ -1,6 +1,7 @@
 package com.sunshine.eduService.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sunshine.eduService.entity.CoursePublishVo;
 import com.sunshine.eduService.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sunshine.eduService.entity.EduCourseDto;
@@ -21,4 +22,10 @@ public interface EduCourseService extends IService<EduCourse> {
     EduCourseDto getCourseInfoById(String id);
 
     void pageQuery(Page<EduCourse> coursePage, CourseQuery query);
+
+    boolean removeById(String courseId);
+
+    CoursePublishVo selectCoursePublishVoById(String id);
+
+    boolean publishCourseById(String id);
 }

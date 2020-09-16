@@ -1,5 +1,6 @@
 package com.sunshine.eduService.mapper;
 
+import com.sunshine.eduService.entity.CoursePublishVo;
 import com.sunshine.eduService.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-06-24
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
-
+    CoursePublishVo selectCoursePublishVoById(String id);
 }

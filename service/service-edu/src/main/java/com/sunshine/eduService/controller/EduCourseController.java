@@ -3,6 +3,7 @@ package com.sunshine.eduService.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunshine.common.utils.R;
+import com.sunshine.eduService.entity.CoursePublishVo;
 import com.sunshine.eduService.entity.EduCourse;
 import com.sunshine.eduService.entity.EduCourseDto;
 import com.sunshine.eduService.query.CourseQuery;
@@ -61,10 +62,33 @@ public class EduCourseController {
     }
 
     @ApiOperation(value = "根据ID删除课程")
-    @RequestMapping("{id}")
+    @DeleteMapping("{id}")
     public R removeById(@ApiParam(name = "id",value = "课程id", required = true) @PathVariable String id){
-        // todo 首先删除video记录，然后删除chapter记录，最后删除Course记录
-        return R.ok();
+        // 首先删除video记录，然后删除chapter记录，最后删除Course记录
+        boolean result = eduCourseService.removeById(id);
+        if(result) {
+            return R.ok();
+        }else {
+            return R.error("删除课程Course失败");
+        }
+    }
+
+    @ApiOperation(value = "根据课程id查询课程信息")
+    @GetMapping("selectCoursePublishVo/{id}")
+    public R selectCoursePublishVoById(@ApiParam(name = "id",value = "课程id", required = true) @PathVariable String id){
+        CoursePublishVo publishVo = eduCourseService.selectCoursePublishVoById(id);
+        return R.ok(publishVo);
+    }
+
+    @ApiOperation(value = "课程发布")
+    @PutMapping("publishCourse/{id}")
+    public R publishCourseById(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id){
+        boolean result = eduCourseService.publishCourseById(id);
+        if(result){
+            return R.ok("课程发布成功！");
+        }else {
+            return R.error("课程发布失败！");
+        }
     }
 }
 

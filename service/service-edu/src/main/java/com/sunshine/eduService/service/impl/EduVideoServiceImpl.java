@@ -66,4 +66,12 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         Integer result = baseMapper.deleteById(id);
         return result > 0;
     }
+
+    @Override
+    public boolean removeVideoByCourseId(String courseId) {
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        int result = baseMapper.delete(wrapper);
+        return result > 0;
+    }
 }

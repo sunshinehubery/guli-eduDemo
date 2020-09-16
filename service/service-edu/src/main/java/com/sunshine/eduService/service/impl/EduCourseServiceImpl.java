@@ -6,14 +6,14 @@ import com.sunshine.baseService.exception.GuliException;
 import com.sunshine.common.utils.ResultCode;
 import com.sunshine.eduService.constants.CourseConstants;
 import com.sunshine.eduService.constants.PriceConstants;
-import com.sunshine.eduService.entity.EduCourse;
-import com.sunshine.eduService.entity.EduCourseDescription;
-import com.sunshine.eduService.entity.EduCourseDto;
+import com.sunshine.eduService.entity.*;
 import com.sunshine.eduService.mapper.EduCourseMapper;
 import com.sunshine.eduService.query.CourseQuery;
+import com.sunshine.eduService.service.EduChapterService;
 import com.sunshine.eduService.service.EduCourseDescriptionService;
 import com.sunshine.eduService.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sunshine.eduService.service.EduVideoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,10 @@ import java.math.BigDecimal;
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
+    @Autowired
+    private EduVideoService eduVideoService;
+    @Autowired
+    private EduChapterService eduChapterService;
 
     @Override
     public String saveCourseInfo(EduCourseDto eduCourseDto) {
@@ -113,5 +117,42 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             wrapper.eq("subject_id", query.getSubjectId());
         }
         baseMapper.selectPage(coursePage, wrapper);
+    }
+
+    @Override
+    public boolean removeById(String courseId) {
+        boolean result = false;
+        //首先删除video记录，然后删除chapter记录，最后删除Course记录
+        result = eduVideoService.removeVideoByCourseId(courseId);
+        if(result){
+            result = eduChapterService.removeChapterByCourseId(courseId);
+            if(result){
+                result = eduCourseDescriptionService.removeCourseDescriptionByCourseId(courseId);
+                if(result){
+                    int count = baseMapper.deleteById(courseId);
+                    return count > 0;
+                }else {
+                    throw new GuliException(ResultCode.DELETE_COURSE_DESCRIPTION_ERROR);
+                }
+            }else {
+                throw new GuliException(ResultCode.DELETE_CHAPTER_ERROR);
+            }
+        }else {
+            throw new GuliException(ResultCode.DELETE_VIDEO_ERROR);
+        }
+    }
+
+    @Override
+    public CoursePublishVo selectCoursePublishVoById(String id) {
+        return baseMapper.selectCoursePublishVoById(id);
+    }
+
+    @Override
+    public boolean publishCourseById(String id) {
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        eduCourse.setStatus(CourseConstants.COURSE_NORMAL);
+        Integer result = baseMapper.updateById(eduCourse);
+        return result > 0;
     }
 }
